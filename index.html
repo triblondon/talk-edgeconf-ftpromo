@@ -60,9 +60,11 @@
 						$(this).off('ended');
 						next();
 
+					}).on('canplay', function() {
+						this.currentTime = 0;
+						this.play();
 					});
-					vid.get(0).currentTime = 0;
-					vid.get(0).play();
+					if (vid.get(0).readyState == 4) vid.trigger('canplay');
 				}
 			}
 
