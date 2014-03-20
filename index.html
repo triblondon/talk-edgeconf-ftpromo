@@ -11,6 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700">
 		<style>
 			body, html {
 				margin:0;
@@ -18,6 +19,9 @@
 				width:100%;
 				height:100%;
 				overflow: hidden;
+				font-family: "Open Sans";
+				color: white;
+				font-size: 60px;
 			}
 			section {
 				position: absolute;
@@ -26,21 +30,50 @@
 				width: 100%;
 				height: 100%;
 				opacity: 0.0001;
+				background-size: cover;
 			}
 			section.current {
 				opacity: 1;
 				transition: opacity 1s;
+			}
+			section .content {
+				margin: 0 80px;
+				position: relative;
+				top: 50%;
+				-webkit-transform: translateY(-50%);
 			}
 
 			section video {
 				width: 100%;
 				height: 100%;
 			}
+
+			section blockquote {
+				font-size: 150%;
+				color: white;
+				text-shadow: 0 0 10px rgba(0,0,0,0.5);
+			}
+			section cite {
+				display: block;
+				text-align: right;
+				font-size: 30px;
+			}
+			section strong {
+				color: #ff0;
+				text-shadow: 0 0 10px black;
+				font-size: 120%;
+			}
 		</style>
 	</head>
 
 	<body>
 
+		<section style='background-image: url(backgrounds/blue-green-yellow.jpg);'>
+			<div class='content'>
+				<blockquote>UK's <strong>most ethical</strong> newspaper</blockquote>
+				<cite>--Carnegie Trust, 2012</cite>
+			</div>
+		</section>
 		<section><video src='video1.mp4' /></section>
 		<section><video src='video2.mp4' /></section>
 		<section style='background: black'><video src='video3.mp4' /></section>
@@ -55,7 +88,9 @@
 				if (!slide.length) slide = $('section').eq(0);
 				$('section').removeClass('current');
 				slide.addClass('current');
-				if (vid = slide.find('video')) {
+
+				vid = slide.find('video')
+				if (vid.length) {
 					vid.on("ended", function() {
 						$(this).off('ended');
 						next();
