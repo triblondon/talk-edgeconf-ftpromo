@@ -1,0 +1,37 @@
+[
+    {
+        "filename": "video4.mp4",
+        "background": "black",
+        "type": "video"
+    },
+    {
+        "filename": "video1.mp4",
+        "background": "white",
+        "type": "video"
+    },
+    {
+        "filename": "video2.mp4",
+        "background": "white",
+        "type": "video"
+    },
+    {
+        "filename": "video3.mp4",
+        "background": "black",
+        "type": "video"
+    },
+    {
+        "filename": "<div class=\"content\"><blockquote>UK's <strong>most ethical<\/strong> newspaper<\/blockquote><cite>--Carnegie Trust, 2012<\/cite><\/div>",
+        "background-image": "url(backgrounds\/financial_times_st_bernard.jpg)",
+        "type": "quote"
+    },
+    {
+        "filename": "<div class=\"content\"><blockquote>Join the FT's award-winning development team<br\/><strong style=\"color:#ff0\">labs.ft.com\/jobs<\/strong><\/cite><\/div>",
+        "background-image": "url(backgrounds\/blue-orange-yellow.jpg)",
+        "type": "quote"
+    },
+    {
+        "filename": "<div class=\"content\"><blockquote>Highest paid daily readership in <strong>126 years<\/strong><\/blockquote><\/div>",
+        "background-image": "url(backgrounds\/oldpaper.jpg)",
+        "type": "quote"
+    }
+]

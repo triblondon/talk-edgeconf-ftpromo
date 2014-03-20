@@ -52,7 +52,6 @@
 				font-size: 150%;
 				color: white;
 				text-shadow: 0 0 10px rgba(0,0,0,0.5);
-				margin: 0;
 			}
 			section cite {
 				display: block;
@@ -60,66 +59,105 @@
 				font-size: 30px;
 			}
 			section strong {
-				color: #FFA027;
+				color: #ff0;
 				text-shadow: 0 0 10px black;
 				font-size: 120%;
 			}
+
+			section img {
+				width: 100%;
+				height: 100%;
+			}
+
 		</style>
 	</head>
 
 	<body>
 
-		<section><video src='video1.mp4' /></section>
-		<section style='background-image: url(backgrounds/oldpaper.jpg);'>
-			<div class='content'>
-				<blockquote>Highest paid daily readership in <strong>126 years</strong></blockquote>
-			</div>
-		</section>
-		<section><video src='video2.mp4' /></section>
-		<section style='background-image: url(backgrounds/financial_times_st_bernard.jpg);'>
-			<div class='content'>
-				<blockquote>UK's <strong>most ethical</strong> newspaper</blockquote>
-				<cite>--2012 Voicing the Public Interest Report</cite>
-			</div>
-		</section>
-		<section style='background: black'><video src='video3.mp4' /></section>
-		<section style='background: black'><video src='video4.mp4' /></section>
-		<section style='background-image: url(backgrounds/blue-orange-yellow.jpg);'>
-			<div class='content'>
-				<blockquote>Join the FT's award-winning development team<br/><strong style='color:#ff0'>labs.ft.com/jobs</strong></cite>
-			</div>
-		</section>
-
-
 		<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
 		<script>
 		window.onload = function() {
+
+			var currentPosition = 0;
+			var itemList = [];
+
 			function next() {
-				var vid, content, slide = $('section.current').next('section');
-				if (!slide.length) slide = $('section').eq(0);
+				var past = $('section.current');
+				var slide = past.next('section');
+
+				if (!slide.length) {
+					slide = $('section').eq(0);
+				}
+
 				$('section').removeClass('current');
 				slide.addClass('current');
-
-				vid = slide.find('video')
-				content = slide.find('.content');
+				var vid = slide.find('video');
 
 				if (vid.length) {
 					vid.on("ended", function() {
 						$(this).off('ended');
 						next();
-
 					}).on('canplay', function() {
 						this.currentTime = 0;
 						this.play();
 					});
-					if (vid.get(0).readyState == 4) vid.trigger('canplay');
 
-				} else if (content.length) {
-					setTimeout(next, 10000);
+					if (vid.get(0).readyState == 4) {
+						vid.trigger('canplay');
+					}
 				}
+				else {
+					// img
+					window.setTimeout(next, 5*1000);
+				}
+
+				// Update DOM.
+
+				past.remove();
+
+				if (++currentPosition >= itemList.length) {
+					currentPosition = 0;
+				}
+
+				$(itemList[currentPosition]).appendTo('body');
 			}
 
-			next();
+			// Load media list and generate elements.
+
+			$.getJSON( "media.json", function(mediaData) {
+				$.each(mediaData, function(tmp, mediaObject ) {
+
+					var item = '<section style="background: ' + mediaObject['background'] + '">';
+
+					switch (mediaObject['type']) {
+						case 'video':
+							item += '<video src="media/' + mediaObject['filename'] + '"/>';
+							break;
+						case 'image':
+							item += '<img src="media/' + mediaObject['filename'] + '"/>';
+							break;
+						case 'quote':
+							// Overwrite section part
+							item = '<section style="background-image: ' + mediaObject['background-image'] + '">';
+							item += mediaObject['filename'];
+							break;
+					}
+
+					item += '</section>';
+
+					itemList.push(item);
+				});
+
+				// Create first five elements.
+
+				for (var i = 0; i < 5; i++) {
+					$(itemList[i]).appendTo('body');
+				}
+
+				// Start!
+
+				next();
+			});
 		};
 		</script>
 	</body>
