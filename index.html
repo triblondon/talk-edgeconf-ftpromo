@@ -59,7 +59,7 @@
 				font-size: 30px;
 			}
 			section strong {
-				color: #ff0;
+				color: #FFA027;
 				text-shadow: 0 0 10px black;
 				font-size: 120%;
 			}
@@ -68,14 +68,19 @@
 
 	<body>
 
-		<section style='background-image: url(backgrounds/blue-green-yellow.jpg);'>
+		<section><video src='video1.mp4' /></section>
+		<section style='background-image: url(backgrounds/oldpaper.jpg);'>
 			<div class='content'>
-				<blockquote>UK's <strong>most ethical</strong> newspaper</blockquote>
-				<cite>--Carnegie Trust, 2012</cite>
+				<blockquote>Highest paid daily readership in <strong>126 years</strong></blockquote>
 			</div>
 		</section>
-		<section><video src='video1.mp4' /></section>
 		<section><video src='video2.mp4' /></section>
+		<section style='background-image: url(backgrounds/financial_times_st_bernard.jpg);'>
+			<div class='content'>
+				<blockquote>UK's <strong>most ethical</strong> newspaper</blockquote>
+				<cite>--2012 Voicing the Public Interest Report</cite>
+			</div>
+		</section>
 		<section style='background: black'><video src='video3.mp4' /></section>
 		<section style='background: black'><video src='video4.mp4' /></section>
 
@@ -84,12 +89,14 @@
 		<script>
 		window.onload = function() {
 			function next() {
-				var vid, slide = $('section.current').next('section');
+				var vid, content, slide = $('section.current').next('section');
 				if (!slide.length) slide = $('section').eq(0);
 				$('section').removeClass('current');
 				slide.addClass('current');
 
 				vid = slide.find('video')
+				content = slide.find('.content');
+
 				if (vid.length) {
 					vid.on("ended", function() {
 						$(this).off('ended');
@@ -100,6 +107,9 @@
 						this.play();
 					});
 					if (vid.get(0).readyState == 4) vid.trigger('canplay');
+
+				} else if (content.length) {
+					setTimeout(next, 10000);
 				}
 			}
 
